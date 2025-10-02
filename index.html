@@ -1,0 +1,191 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Simple Workout To-Do List</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            max-width: 500px;
+            margin: 50px auto;
+            padding: 20px;
+            background-color: black
+        }
+        
+        h1 {
+            text-align: center;
+            color: #333;
+        }
+        
+        .input-section {
+            margin-bottom: 20px;
+        }
+        
+        #taskInput {
+            width: 70%;
+            padding: 10px;
+            font-size: 16px;
+            border: 2px solid #ddd;
+            border-radius: 5px;
+        }
+        
+        #addBtn {
+            width: 25%;
+            padding: 10px;
+            font-size: 16px;
+            background-color: #4CAF50;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+        
+        #addBtn:hover {
+            background-color: #45a049;
+        }
+        
+        #todoList {
+            list-style-type: none;
+            padding: 0;
+        }
+        
+        .workout-item {
+            background-color: white;
+            padding: 15px;
+            margin: 10px 0;
+            border-radius: 5px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border-left: 4px solid #4CAF50;
+        }
+        
+        .workout-item.completed {
+            background-color: #d4edda;
+            text-decoration: line-through;
+            color: #155724;
+        }
+        
+        .complete-btn {
+            background-color: #007bff;
+            color: white;
+            border: none;
+            padding: 8px 12px;
+            border-radius: 3px;
+            cursor: pointer;
+            margin-right: 5px;
+        }
+        
+        .complete-btn:hover {
+            background-color: #0056b3;
+        }
+        
+        .delete-btn {
+            background-color: #dc3545;
+            color: white;
+            border: none;
+            padding: 8px 12px;
+            border-radius: 3px;
+            cursor: pointer;
+        }
+        
+        .delete-btn:hover {
+            background-color: #c82333;
+        }
+    </style>
+</head>
+<body>
+    <h1>💪 My Workout List</h1>
+    
+    <div class="input-section">
+        <input type="text" id="taskInput" placeholder="Enter workout (e.g., 20 push-ups)">
+        <button id="addBtn" onclick="addWorkout()">Add</button>
+    </div>
+    
+    <ul id="todoList">
+        <li class="workout-item">
+            <span>Run for 10 minutes</span>
+            <div>
+                <button class="complete-btn" onclick="markComplete(this)">Complete</button>
+                <button class="delete-btn" onclick="deleteWorkout(this)">Delete</button>
+            </div>
+        </li>
+        <li class="workout-item">
+            <span>Do 15 push-ups</span>            cd "c:\webprogramming\assignment 2_to do list"
+            <div>
+                <button class="complete-btn" onclick="markComplete(this)">Complete</button>
+                <button class="delete-btn" onclick="deleteWorkout(this)">Delete</button>
+            </div>
+        </li>
+    </ul>
+
+    <script>
+        // Simple function to add a new workout
+        function addWorkout() {
+            // Get the input element
+            const input = document.getElementById("taskInput");
+            const workoutText = input.value;
+            
+            // Check if input is empty
+            if (workoutText === "") {
+                alert("Please enter a workout!");
+                return;
+            }
+            
+            // Get the list element
+            const list = document.getElementById("todoList");
+            
+            // Create a new list item
+            const newItem = document.createElement("li");
+            newItem.className = "workout-item";
+            
+            // Add the HTML content to the new item
+            newItem.innerHTML = `
+                <span>${workoutText}</span>
+                <div>
+                    <button class="complete-btn" onclick="markComplete(this)">Complete</button>
+                    <button class="delete-btn" onclick="deleteWorkout(this)">Delete</button>
+                </div>
+            `;
+            
+            // Add the new item to the list
+            list.appendChild(newItem);
+            
+            // Clear the input
+            input.value = "";
+        }
+        
+        // Simple function to mark workout as complete
+        function markComplete(button) {
+            // Find the workout item (parent of parent of button)
+            const workoutItem = button.parentElement.parentElement;
+            
+            // Toggle the completed class
+            if (workoutItem.classList.contains("completed")) {
+                workoutItem.classList.remove("completed");
+                button.textContent = "Complete";
+            } else {
+                workoutItem.classList.add("completed");
+                button.textContent = "Undo";
+            }
+        }
+        
+        // Simple function to delete a workout
+        function deleteWorkout(button) {
+            // Find the workout item (parent of parent of button)
+            const workoutItem = button.parentElement.parentElement;
+            
+            // Remove it from the list
+            workoutItem.remove();
+        }
+        
+        // Allow Enter key to add workout
+        document.getElementById("taskInput").addEventListener("keypress", function(event) {
+            if (event.key === "Enter") {
+                addWorkout();
+            }
+        });
+    </script>
+</body>
+</html>
